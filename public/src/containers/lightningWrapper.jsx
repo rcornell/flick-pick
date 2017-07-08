@@ -2,7 +2,7 @@ import React from 'react';
 import Lightning from './lightning.jsx';
 import LightningHeader from '../components/lightningHeader.jsx';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 class LightningWrapper extends React.Component {
   constructor(props) {
@@ -78,10 +78,15 @@ class LightningWrapper extends React.Component {
   }
 
   endRound() {
+    console.log('Ending round.');
     if (this.state.roundsRemaining === 0) {
       clearInterval(this.state.intervalId);
+      console.log('NO ROUNDS LEFT!');
       // proceed to Results component
     } else {
+      this.setState({
+        roundsRemaining: this.state.roundsRemaining - 1
+      });
       this.startNextRound();
     }
   }
@@ -100,14 +105,20 @@ class LightningWrapper extends React.Component {
   }
 
   render() {
+    console.log('Rounds remaining: ', this.state.roundsRemaining);
+    const Page = this.state.roundsRemaining <= 0
+      ? <Redirect push to="/results" />
+      : (
+        <div>
+          <LightningHeader timer={this.state.timer} />
+          <Lightning
+            handleLightningTileClick={this.handleLightningTileClick}
+            movies={this.state.movies}
+          />
+        </div>
+        );
     return (
-      <div>
-        <LightningHeader timer={this.state.timer}/>
-        <Lightning
-          handleLightningTileClick={this.handleLightningTileClick}
-          movies={this.state.movies}
-        />
-      </div>
+      Page
     );
   }
 }
