@@ -4,17 +4,20 @@ import Anime from 'react-anime';
 const randTime = Math.floor(Math.random() * (2000 - 100 + 1)) + 100;
 const randMove = Math.floor(Math.random() * (100 + (-100)) + (-100));
 
-const TagBubble = ({tagName}) => {
-  
-    <div className="tag-bubble"/>
-  
-
+const TagBubble = ({ tagName, selectItem, tag, isSelected }) => {
   return (
-      <Anime delay={(e, i) => i * 100} duration={[2000]} translateX={['-50rem', '0rem']} >
-         <div className="tag-bubble">
-          <div className="tag-text">{tagName}</div> 
-         </div>
-      </Anime>
+    <Anime
+      delay={(e, i) => i * 100}
+      duration={[2000]}
+      translateX={['-50rem', '0rem']}
+    >
+      <div
+        className={'tag-bubble' + isSelected(tag, tagName)}
+        onClick={() => selectItem(tagName, tag)}
+      >
+        <div className="tag-text">{tagName}</div>
+      </div>
+    </Anime>
   );
 };
 

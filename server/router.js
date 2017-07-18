@@ -21,6 +21,7 @@ router.get('/api/lightning/testUserTags', apiController.findDuplicateTagIDs);
 
 // router.get('/api/selectedTags');
 router.post('/api/selectedTags', apiController.postLaunchPadTags);
+// router.get('/api/selectedTags', apiController.postLaunchPadTags);
 
 
 router.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email', 'user_likes'] }));
