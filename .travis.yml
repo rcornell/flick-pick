@@ -1,12 +1,23 @@
 language: node_js
 node_js:
-  - "iojs"
+- '6'
+env:
+  matrix:
+  - TRAVIS_NODE_VERSION="6.3"
+install:
+- npm install
+cache:
+  directories:
+  - node_modules
 deploy:
   provider: elasticbeanstalk
-  access_key_id: "AKIAILHOA3GUTEXEGZ4Q"
+  access_key_id: AKIAIPKLFWX5TZYVHIFA
   secret_access_key:
-    secure: "Wm1vRmsK3QQY+d11QPFg+tQyo8BuzPm4bZRC/i/76OtMo5frPQL14fO7Mbt/Adqw/G1P5GN08g4WHaBMhbwE7tp8kP/3IkC13VMGjPxCZUtwq2ESz87ol5If3RsqWd6HtMDTfvUz8tLjyhb111nHLY7+C8Az1UWaep1H7Gr7tevRymHSE0xBjENQV7Do++0ktWW8gHCMGaREVvMnN6007Y+X/n4hfgpVsf3htKCPDPUZVltUULQvNSp93LIYxuI3EXxbWwqiUfeQJE1ae0VORj+/iwuUrFXNSrkMZyk8rDq3oM6UmlfX4WCVNOYW3SA7PtKA8CJw2Q6NPGjuJQCasr9Q0hF64BsLGJgMLOQ+ON6wkxJsBrG8+MtIR/zJxG0QfB3A41Vic5Ge6Xd1vP0dE1Ztdi47L5zssO2NTAcTl0eKlI8Tb2/C30NxR49nXsu8P7dqmdOB4BVH3KUVQUCd2xXY/iBgofoQ6XdGknunA1aHfUi9P8o6XRe1V8lsuEtfi0Tj9sskYJ2MEiSe0M7EvSccv9glJ3OUjMrLMLqrb+lOxLjOs19B35+RlFCdwOaLriGyqvtHWjzIqZj2GUsvZnrH+QqaNGek2NiGbo9K2XCRSSoftSTYN3+EU/ICnZRydr4jMIzOmWskv/ePyOX64VjualZ/rA+iJxzj91y2EQ0="
+    secure: ep9Ar2Bgcgp0dVR+ujuPAPGkVMK2MB01fRuZmNKkod3or0Ouivq8vU/FcujA2M8J0iHglmF2y7isWLNHPtcKljUtae+uTuZ8aNkNQENjw7EtOTEprj1UGu2bAKbV04tnV3sTj9MgVq9+kpx144hOhHbeg06A7UbSm60x3DKHi3rp0m8LkoU9YtUg/o5PcRqQrEfRMkiYg1iD6adi+wcZmNOBTK7hp5pdNaxAWmvFRDyjDSAlgh2/HImhevDpNQxSSrLDpfKA42aFMWrXNEuie/jMjTDb8b9pgXZCKHgEhzGgPisyY2qmd/cSqd7Pb+0a1ffoz0i12Y5u2zwTeaeNufWokxNbn9NQ1fTGPpj/0EJDhKWEICj21ucjIM0fSDtdmXzJk7JsZtd+buKLf8cWKgDL0EiYn/BftCBDtKyzwGHmEXwI2qkENctWTrf8mFCchqWK8Iygfu9vJr7HLoC58BqaKitiGS/0amBeDWNJ9unTTAnM71Y1UKCxiVO5FSukE6i/TKWy4jn7ICSETC+Pjngf9R7pVtBTYW0KSNdQWWVhKho8DjmeNJewKrV4Bi8SV1JdUw75FwDylkbNVUe3kChk/HvCx6lKcEDiupSZYsSuCVfsYhCerlT8NJteJhJKSCBI2TcKEMacXmEVcoGh6A4283MTz285gRMUcJ36Cd4=
   region: us-east-2
   app: flickpick
-  env: ee-tsqktm6kwz
+  env: fliq
   bucket_name: elasticbeanstalk-us-east-2-088432678416
+  on:
+    repo: rcornell/flick-pick
+    branch: dev
