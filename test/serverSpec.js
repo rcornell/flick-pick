@@ -78,6 +78,29 @@ describe('FlickPick Server Tests', function() {
           done();
         });
     });
+
+    it('should provide an array of smart results', function (done) {
+      request(serverUrl)
+        .get('/test/results/user')
+        .end(function(err, res) {
+          expect(res.body).to.be.an('array');
+          expect(res.body.length).to.equal(6);
+          for (var i = 0; i < 4; i += 1) {
+            const movie = res.body[i];
+            expect(movie.poster).to.be.a('string');
+            expect(movie.title).to.be.a('string');
+            expect(movie.year).to.be.a('string');
+            expect(movie.plot).to.be.a('string');
+            expect(movie.director).to.be.a('string');
+            expect(movie.actors).to.be.a('string');
+            expect(movie.writer).to.be.a('string');
+            expect(movie.rated).to.be.a('string');
+            expect(movie.ratings).to.be.a('string');
+            expect(movie.genre).to.be.a('string');
+          }
+          done();
+        });
+    });
   });
 
   describe('Auth endpoints', function() {
