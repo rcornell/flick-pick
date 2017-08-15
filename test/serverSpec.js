@@ -81,7 +81,7 @@ describe('FlickPick Server Tests', function() {
 
     it('should provide an array of smart results', function (done) {
       request(serverUrl)
-        .get('/test/results/user')
+        .get('/test/api/results/user')
         .end(function(err, res) {
           expect(res.body).to.be.an('array');
           expect(res.body.length).to.equal(6);
@@ -98,6 +98,17 @@ describe('FlickPick Server Tests', function() {
             expect(movie.ratings).to.be.a('string');
             expect(movie.genre).to.be.a('string');
           }
+          done();
+        });
+    });
+
+    it('should return a random quote', function(done) {
+      request(serverUrl)
+        .get('/test/api/quote')
+        .end(function(err, res) {
+          expect(res.quote).to.be.a.string;
+          expect(res.author).to.be.a.string;
+          expect(res.category).to.be.a.string;
           done();
         });
     });
