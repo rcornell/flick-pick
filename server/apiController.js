@@ -212,7 +212,6 @@ const checkGenreTrophies = (user, clickedMovie) => {
     include: [{ model: db.trophies, as: 'trophy' }]
   })
     .then((matchedUserTrophies) => {
-      console.log('Found matched user trophies: ', matchedUserTrophies);
       userTrophies = matchedUserTrophies;
     })
     .then(() => {
@@ -431,7 +430,6 @@ module.exports.getSmartUserResults = (req, res) => {
             return acc;
           }, []);
           const unknownTagWeight = ((100 - params.knownTagsPercentage) / 100) / unknownTags.length;
-          console.log('Working');
           const randomTagArray = [];
           for (let i = 0; i < params.numberOfResults; i += 1) {
             const tempArray = [];
@@ -452,7 +450,6 @@ module.exports.getSmartUserResults = (req, res) => {
             }
             randomTagArray.push(tempArray);
           }
-          console.log('Chosen Tags :', randomTagArray);
           const movieSelection = randomTagArray.map((item) => {
             let filteredMovies = newAllMovies;
             for (let i = 0; i < params.numRandomTagsPicked; i += 1) {
@@ -475,7 +472,6 @@ module.exports.getSmartUserResults = (req, res) => {
             }
             return filteredMovies[Math.floor(Math.random() * filteredMovies.length)].dataValues;
           });
-          console.log('Movie Selection :', movieSelection);
           return movieSelection;
         })
         .then((movies) => {
@@ -537,7 +533,6 @@ module.exports.getRandomResults = (req, res, userTrophyObj) => {
           id: randomMovieId
         });
       }
-      console.log('Calling Movie.findAll with: ', ...moviesToGrab);
       db.movies.findAll({
         where: {
           $or: [...moviesToGrab]
@@ -751,7 +746,6 @@ module.exports.setResultsMovieAsSeen = (req, res) => {
 };
 
 module.exports.setSearchedMovieAsSeen = (req, res) => {
-  console.log(req.body.movie);
   const movieUrl = omdbIMDBSearchUrl + req.body.movie.imdbID;
   getDetailedMovieInformation(movieUrl)
     .then(movieFromDb => setMovieFromDbAsSeen(movieFromDb.id, req, res));
@@ -762,7 +756,6 @@ module.exports.handleMovieSearchTMDB = (req, res) => {
   let { movieName } = req.body;
   movieName = movieName.replace(regex, '+');
   const searchUrl = theMovieDbUrl + movieName;
-  console.log(searchUrl);
   axios.post(searchUrl)
     .then((results) => {
       // Shape the data from The Movie Database into
@@ -807,10 +800,8 @@ module.exports.handleMovieSearchOMDB = (req, res) => {
     movieName = movieName.substring(0, movieName.length - 1);
   }
   const searchUrl = omdbSearchUrl + movieName;
-  console.log('Searching for movies: ', searchUrl);
   axios.post(searchUrl)
     .then((results) => {
-      console.log('Received results: ', results.data);
       const movieObjects = results.data.Search.map(movie => (
         {
           title: movie.Title,
@@ -824,7 +815,6 @@ module.exports.handleMovieSearchOMDB = (req, res) => {
     })
     .then((movies) => {
       if (req.user) {
-        console.log('Trying to hydrate');
         return hydrateLikesAndDislikes(movies, req.user.id);
       }
       return movies;
@@ -848,11 +838,9 @@ const reshapeMovieData = movie =>
   });
 
 module.exports.getLargeTileData = (req, res) => {
-  console.log('getLargeTileData received: ', req.body.movie);
   const movieUrl = omdbIMDBSearchUrl + req.body.movie.imdbID;
   axios.post(movieUrl)
     .then((results) => {
-      console.log('getLargeTileData received: ', results.data);
       const movie = reshapeMovieData(results.data);
       res.send(movie);
     })
@@ -970,7 +958,6 @@ module.exports.postLaunchPadTags = (req, res) => {
     this.checkTrophy({ user: req.user, trophy: [] }, launchPadTrophyId, true)
   )
   .then((userTrophyObj) => {
-    console.log('User Trophy Object :', userTrophyObj);
     res.send(userTrophyObj);
   })
   .catch(error => res.send(error));
@@ -1069,7 +1056,6 @@ module.exports.updateUserSettings = (req, res) => {
     where: { id }
   })
   .then(() => {
-    console.log('Successfully updated user info (id, reView)', id, reView);
     res.sendStatus(200);
   })
   .catch((error) => {
@@ -1140,7 +1126,6 @@ module.exports.checkTrophy = (userTrophyObj, trophyId, huntTrophie) =>
               return userTrophyObj;
             })
             .then((userAndTrophyObj) => {
-              console.log('userAndTrophyObj is', userAndTrophyObj);
               return userAndTrophyObj;
             });
           })

@@ -83,11 +83,4 @@ router.get('/logout', (req, res) => {
   res.end();
 });
 
-
-// TEST ENDPOINTS
-router.get('/test/results/user', (req, res) => {
-  req.user = { id: 2, reView: 1 };
-  apiController.getSmartUserResults(req, res);
-});
-
 module.exports = router;

@@ -40,6 +40,10 @@ app.use(passport.session());
 
 // ROUTES
 app.use(express.static(path.resolve(__dirname, './public')));
+app.use('/test', (req, res) => {
+  req.user = { id: 2, reView: 1 };
+  router(req, res);
+});
 app.use('/', router);
 
 // PASSPORT MIDDLEWARE
