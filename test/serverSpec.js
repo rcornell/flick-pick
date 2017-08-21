@@ -112,6 +112,20 @@ describe('FlickPick Server Tests', function() {
           done();
         });
     });
+
+    it('should return a movie trailer', function(done) {
+      request(serverUrl)
+        .post('/test/api/trailer')
+        .send({
+          movie: {
+            title: 'Star Wars'
+          }
+        })
+        .end(function(err, res) {
+          expect(res.body.kind).to.equal('youtube#searchResult');
+          done();
+        });
+    });
   });
 
   describe('Auth endpoints', function() {
